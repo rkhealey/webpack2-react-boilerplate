@@ -19,6 +19,7 @@ export default function counterReducer(state = initialState, action = {}) {
     [COUNT_DOWN]: () => {
       const count = state.count - 1;
       return {
+        ...state,
         count,
       };
     },

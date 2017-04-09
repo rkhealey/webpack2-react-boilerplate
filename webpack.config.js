@@ -11,6 +11,9 @@ module.exports = {
     bundle: './src/index.jsx',
     vendor: VENDOR_LIBS,
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].[chunkhash].js',
