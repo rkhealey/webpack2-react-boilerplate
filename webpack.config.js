@@ -1,6 +1,8 @@
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 const VENDOR_LIBS = [
   'react', 'lodash', 'redux', 'react-redux', 'react-dom', 'redux-thunk',
@@ -12,7 +14,10 @@ module.exports = {
     vendor: VENDOR_LIBS,
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.sass'],
+    alias: {
+      global: path.resolve(__dirname, 'src/style/'),
+    },
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -26,8 +31,20 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        use: ['style-loader', 'css-loader', 'sass-loader'],
         test: /\.sass$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader', options: { modules: true, importLoaders: 1 } },
+            'postcss-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: ['src/style/global.scss'],
+              },
+            },
+          ],
+        }),
       },
     ],
   },
@@ -40,6 +57,14 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
+    }),
+    new ExtractTextPlugin('styles.css'),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [
+          autoprefixer(),
+        ],
+      },
     }),
   ],
 };
