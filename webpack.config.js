@@ -42,6 +42,11 @@ module.exports = {
               options: {
                 includePaths: ['src/style/global.scss'],
               },
+            }, {
+              loader: 'sass-resources-loader',
+              options: {
+                resources: './src/style/variables.scss',
+              },
             },
           ],
         }),
@@ -61,6 +66,7 @@ module.exports = {
     new ExtractTextPlugin('styles.css'),
     new webpack.LoaderOptionsPlugin({
       options: {
+        context: __dirname,
         postcss: [
           autoprefixer(),
         ],
