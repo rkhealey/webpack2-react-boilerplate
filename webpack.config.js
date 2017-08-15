@@ -1,8 +1,8 @@
-var webpack = require('webpack');
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 const VENDOR_LIBS = [
   'react', 'lodash', 'redux', 'react-redux', 'react-dom', 'redux-thunk',
@@ -14,7 +14,7 @@ module.exports = {
     vendor: VENDOR_LIBS,
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.sass'],
+    extensions: ['.js', '.jsx', '.scss'],
     alias: {
       global: path.resolve(__dirname, 'src/style/'),
     },
@@ -31,7 +31,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.sass$/,
+        test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
